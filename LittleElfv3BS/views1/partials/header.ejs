@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Little Elf </title>
+    <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css'> <!--semantic-ui link -->
+    <link rel='stylesheet' type='text/css' href='/stylesheets/app.css'> <!-- local style sheet -> why you no work -->
+    <script type='text/javascript' src='/scripts/app.js'></script> <!--local script source-->
+    <script type="text/javascript" href="../../node_modules/ejs/ejs.js" />
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script> <!-- add jquery to local project! needed -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- hosted jquery on client side -->
+
+    <script src="http://semantic-ui.com/javascript/library/jquery.min.js"></script> <!--semantic jquery library -->
+    <script src="http://semantic-ui.com/javascript/semantic.js"></script>
+
+    <!--semantic ui add to project -->
+    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="semantic/dist/semantic.min.js"></script>
+
+    <!--add calendar to project -->
+    <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+    <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- bootstrap
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    -->
+
+  <body>
+    <script>
+        window.onload = function () {
+          $('#example5').calendar();
+        }
+    </script>
+    <div class='ui fixed inverted menu'>
+      <div class='ui container'>
+        <div class='header item'><i class='home icon'></i> <a href='/'> Little Elf </a></div> <!-- find icons on their website! -->
+        <a href='/clients/new' class='item'> New Client </a>
+        <a href='/elves/new' class='item'> New Elf </a>
+        <% if(login) { %>
+          <a href='/logout' class='item'> Logout </a>
+        <% } else { %>
+          <a href='/login' class='item'> Login </a>
+        <% } %>
+      </div>
+    </div>
+    <div class='spacer'></div>

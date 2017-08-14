@@ -1,0 +1,11 @@
+
+.container-fluid {
+  text-align: center;
+}
+
+.form-group.required.control-label:before{
+   color: red;
+   content: "*";
+   position: absolute;
+   margin-left: -10px;
+}

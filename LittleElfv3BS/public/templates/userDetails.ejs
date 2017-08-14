@@ -1,0 +1,206 @@
+
+<% include partials/header.ejs %>
+<% include partials/navbar.ejs %>
+
+<link rel='stylesheet' type='text/css' href='/stylesheets/clientForm.css'>
+<script type='text/javascript' src='/scripts/clientForm.js'></script> <!--local script source-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- hosted jquery on client side -->
+
+<div style='margin-top: 7em; margin-bottom: 2em' class='container-fluid'>
+  <div class="col-md-12">
+    <div class="col-md-10 col-md-offset-1 jumbotron">
+
+      <% if (user.userType === 'Client') { %>
+        <h3 class="dark-grey">Your Client Details</h3>
+        <form action='/user/details/updateClient' method='POST'  id="contact_form">
+      <% } else { %>
+        <h3 class="dark-grey">Your Elf Details</h3>
+        <form action='/user/details/updateElf' method='POST'  id="contact_form">
+      <% } %>
+
+      <div class="row">
+        <% if (errors[errors.findIndex(x => x.param == 'firstName')] ) { %>
+            <p> found firstname error </p>
+          <% } %>
+        <div class="form-group required control-label col-lg-6 col-md-6 col-sm-6">
+          <label>First Name</label>
+          <div class='input-group'>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input
+            type="text"
+            name="firstName"
+            class="form-control"
+            id=""
+            placeholder="first name"
+            required
+            value='<%= user.firstName %>'
+            >
+          </div>
+        </div>
+
+        <div class="form-group required control-label col-lg-6 col-md-6 col-sm-6">
+          <label>Last Name</label>
+          <div class='input-group'>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input
+            type="text"
+            name="lastName"
+            class="form-control"
+            id=""
+            placeholder="last name"
+            required
+            value='<%= user.lastName %>'
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group required control-label col-lg-6 col-md-6 col-sm-6">
+          <label>Email</label>
+          <div class='input-group'>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            id=""
+            placeholder="email"
+            required
+            value='<%= user.email %>'
+            >
+          </div>
+        </div>
+
+        <div class="form-group required control-label col-lg-6 col-md-6 col-sm-6">
+          <label>Phone #</label>
+          <div class='input-group'>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+          <input
+            type="text"
+            name="phone"
+            class="form-control"
+            id=""
+            placeholder="phone #"
+            required
+            value='<%= user.phone %>'
+            >
+        </div>
+      </div>
+    </div>
+
+      <div class="row">
+        <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-6">
+          <label>Unit #</label>
+          <div class='input-group'>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+          <input
+            type="text"
+            name="unitNumber"
+            class="form-control"
+            id=""
+            placeholder="unit #"
+            value='<%= user.addresses[0].unitNumber %>'
+            >
+          </div>
+        </div>
+
+        <div class="form-group required control-label col-lg-2 col-md-2 col-sm-3 col-xs-6">
+          <label>Street #</label>
+          <div class='input-group'>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+          <input
+            type="text"
+            name="streetNumber"
+            class="form-control"
+            id=""
+            placeholder="street #"
+            required
+            value='<%= user.addresses[0].streetNumber %>'
+            >
+          </div>
+        </div>
+
+        <div class="form-group required control-label col-lg-8 col-md-8 col-sm-6">
+          <label>Street Name</label>
+          <div class='input-group'>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+          <input
+            type="text"
+            name="streetName"
+            class="form-control"
+            id=""
+            placeholder="street address"
+            required
+            value='<%= user.addresses[0].streetName %>'
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group required control-label col-lg-6 col-md-8 col-sm-7">
+          <label>City / Suburb</label>
+          <div class='input-group'>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+          <input
+            type="text"
+            name="suburb"
+            class="form-control"
+            id=""
+            placeholder="suburb"
+            required
+            value='<%= user.addresses[0].suburb %>'
+            >
+          </div>
+        </div>
+
+        <div class="form-group required control-label col-lg-3 col-md-2 col-sm-3 col-xs-6">
+          <label class='col-form-label'>Post Code</label>
+          <div class='input-group'>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+          <input
+            type="text"
+            name="postCode"
+            class="form-control"
+            id=""
+            placeholder="postcode"
+            required
+            value='<%= user.addresses[0].postCode %>'
+            >
+          </div>
+        </div>
+
+        <div class="form-group required control-label col-lg-3 col-md-2 col-sm-2 col-xs-6">
+          <label>State</label>
+          <div class='input-group required'>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+          <select name="state" class="form-control" required>
+            <option value='<%= user.addresses[0].state %>' ><%= user.state %></option>
+            <option value="NSW">NSW</option>
+            <option value="QLD">QLD</option>
+            <option value="VIC">VIC</option>
+            <option value="ACT">ACT</option>
+            <option value="WA">WA</option>
+            <option value="NT">NT</option>
+            <option value="TAS">TAS</option>
+          </select>
+        </div>
+        </div>
+      </div>
+
+    <div class="form-group">
+        <div class='col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4'>
+          <div class="form-group">
+            <button type="submit" class="btn-lg btn-primary btn-block">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+
+    </div>
+  </div>
+</div>
+
+<% include partials/footer.ejs %>

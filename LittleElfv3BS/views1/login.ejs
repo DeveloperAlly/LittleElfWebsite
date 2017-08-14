@@ -1,0 +1,32 @@
+<% include partials/header.ejs %>
+
+<div class='ui main text container segment'>
+  <div class='ui huge header'> Login </div>
+
+  <form class='ui form' action='/login' method='POST'>
+    <div class='field'>
+      <label>Email</label>
+      <input type='email' name='email' placeholder="email">
+    </div>
+    <div class='field'>
+      <label>Password</label>
+      <input type='password' name='password' placeholder="password">
+    </div>
+    <div class='field'>
+      <input class='ui violet big basic button' type='submit'>
+    </div>
+    <div>
+      <p></p>
+      <p> No account? Signup! </p>
+    </div>
+    <div class='field'>
+      <button class='ui blue big basic button'><a href='/elves/new'>Elf SignUp</a></button>
+    </div>
+    <div class='field'>
+      <button class='ui blue big basic button'><a href='/clients/new'>Client SignUp</a></button>
+    </div>
+  </form>
+  <p><a href='/logout'> Logout </a></p>
+</div>
+
+<% include partials/footer.ejs %>

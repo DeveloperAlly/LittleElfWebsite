@@ -1,0 +1,23 @@
+<% include partials/header.ejs %>
+<% include partials/navbar.ejs %>
+
+<h1> Congrats you signed up </h1>
+
+<p><a href='/'> Home </a></p>
+<p><a href='/jobs/new'> Get some washing washed.. </a></p>
+
+<p> Your <%= user.userType %> Details <p>
+
+<!--
+email
+firstName
+lastName
+-->
+<p> <%= user.email %> </p>
+<p> <%= user.firstName %> </p>
+<p> <%= user.lastName %> </p>
+<p> <%= user.phone %> </p>
+<p> <%= user.address[0].streetName %></p>
+<p> <%= user.address[0].suburb %></p>
+
+<% include partials/footer.ejs %>

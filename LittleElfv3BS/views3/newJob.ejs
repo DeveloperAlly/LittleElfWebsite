@@ -1,0 +1,101 @@
+<% include /partials/header.ejs %>
+<% include /partials/navbar.ejs %>
+
+<script>
+    window.onload = function () {
+      $('#example2').calendar({
+          type: 'date'
+      });
+      $('#example3').calendar({
+        type: 'time'
+      });
+    }
+</script>
+
+
+<div class='ui main text container segment'>
+  <div class='ui huge header'> Create New Job </div>
+  <form class='ui form' action='/createNewJob' method='POST'>
+    <div class='fields'>
+    <div class='three wide field'>
+        <label>Job Type</label>
+        <select name="jobType" class="ui dropdown">
+          <option value="Regular">Regular</option>
+          <option value="Budget">Budget</option>
+          <option value="Premium">Premium</option>
+        </select>
+        <p class='inline'> What is this? </p>
+      </div>
+      <div class='three wide required field'>
+        <label>Number of loads</label>
+        <input type='number' name='numberOfLoads' placeholder="num of Loads" value='1' || <%= user.value %>>
+      </div>
+      </div>
+      <div class='fields'>
+      <div class='required field'>
+        <label>Preferred Pickup Date </label>
+        <div class="ui calendar" id="example2">
+           <div class="ui input left icon">
+             <i class="calendar icon"></i>
+             <input type="text" name= "date" placeholder="Date">
+           </div>
+         </div>
+       </div>
+       <div class='required field'>
+         <label>Preferred Pickup Time </label>
+          <select name="time" class="ui dropdown">
+            <option value="morning">7am - 9am</option>
+            <option value="afternoon">2pm - 4pm</option>
+            <option value="evening">7pm - 9pm</option>
+          </select>
+       </div>
+    </div>
+    <div class='fields'>
+      <div class='two wide field'>
+        <label>Unit #</label>
+        <input type='text' name='unitNumber' placeholder='Unit#' value='<%= user.address[0].unitNumber %>'>
+      </div>
+      <div class='three wide required field'>
+        <label>Street #</label>
+        <input type='text' name='streetNumber' placeholder='Street#' value='<%= user.address[0].streetNumber %>'>
+      </div>
+      <div class='eleven wide required field'>
+        <label><%= user.address[0].streetName%></label>
+        <input type='text' name='streetName' placeholder='Street Name' value='<%= user.address[0].streetName %>'>
+      </div>
+    </div>
+    <div class='fields'>
+      <div class='ten wide required field'>
+        <label>Suburb</label>
+        <input type='text' name='suburb' placeholder='Suburb' value='<%= user.address[0].suburb %>'>
+      </div>
+      <div class='three wide required field'>
+        <label>Postcode</label>
+        <input type='text' name='postcode' placeholder='Postcode' value=<%= user.address[0].postCode %>>
+      </div>
+      <div class='three wide required field'>
+        <label>State</label>
+        <select name="state" class="ui dropdown">
+          <option value=<%= user.address[0].state %>></option>
+          <option value="NSW">NSW</option>
+          <option value="QLD">QLD</option>
+          <option value="VIC">VIC</option>
+          <option value="ACT">ACT</option>
+          <option value="WA">WA</option>
+          <option value="NT">NT</option>
+          <option value="TAS">TAS</option>
+        </select>
+      </div>
+    </div>
+    <div class='field'>
+      <label> Pickup details </label>
+      <textarea name='pickupdetails' placeholder='Please describe the pickup place for our elves to find your laundry!'></textarea>
+    </div>
+    <div class='field'>
+      <input class='ui violet big basic button' type='submit'>
+    </div>
+    </div>
+  </form>
+</div>
+
+<% include /partials/footer.ejs %>

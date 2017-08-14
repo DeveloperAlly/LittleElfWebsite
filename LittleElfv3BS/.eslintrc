@@ -1,0 +1,16 @@
+{
+  "extends": "rallycoding",
+  "rules": {
+    "arrow-body-style": 0,
+    "no-underscore-dangle": 0,
+    "radix": 0,
+    "key-spacing": 0,
+    "no-multi-spaces": 0,
+    "object-curly-spacing": 0,
+    "padded-blocks": 0,
+    "import/newline-after-import": 0,
+    "max-len": 0,
+    "quote-props" : 0,
+    "no-unused-vars": 0
+  }
+}

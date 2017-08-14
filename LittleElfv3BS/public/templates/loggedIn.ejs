@@ -1,0 +1,16 @@
+<% include partials/header.ejs %>
+<% include partials/navbar.ejs %>
+
+<h1> Congrats you logged in </h1>
+
+<p><a href='/'> Home </a></p>
+<p><a href='/jobs/new'> New Job Create </a></p>
+
+<!--
+email
+firstName
+lastName
+-->
+<p> <%= user.email %> </p>
+
+<% include partials/footer.ejs %>

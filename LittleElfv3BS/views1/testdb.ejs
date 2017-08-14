@@ -1,0 +1,42 @@
+
+
+<h1> Test page </h1>
+<form class='ui form' action=/findUserByEmail method='POST'>
+  <div class='field'>
+    <label> Find a user by email </email>
+    <input type='text' name='email1' placeholder='find user by email' value= <%= user.email1 %> >
+    <button class="ui button" type="submit">Submit</button>
+    <% if(user.email1) { %>
+      <p> Search email: <%= user.email1 %> </p>
+    <% } %>
+    <% if(results.length > 0) { %>
+      <p> <%= results[0].address %> </p>
+    <% } else if (errors.length > 0) { %>
+      <p> <%= errors[0].msg %> </p>
+    <% } %>
+  </div>
+</form>
+
+<form class='ui form' action=/findUserByEmailAndDelete method='POST'>
+  <div class='field'>
+    <label> Delete user by email </email>
+    <input type='text' name='email2' placeholder='find user by email' value= <%= user.email2 %>>
+    <button class="ui button" type="submit">Submit</button>
+    <% if(user.email2) { %>
+      <p> Search email: <%= user.email2 %> </p>
+    <% } %>
+    <% if(results.length > 0) { %>
+      <p> <%= results[0].firstName %> </p>
+    <% } else if (errors.length > 0) { %>
+      <p> <%= errors[0].msg %> </p>
+    <% } %>
+  </div>
+</form>
+
+<form class='ui form' action=/findUserByEmail method='POST'>
+  <div class='field'>
+    <label> Edit a user by email </email>
+    <input type='text' name='email3' placeholder='find user by email'>
+    <button class="ui button" type="submit">Submit</button>
+  </div>
+</form>

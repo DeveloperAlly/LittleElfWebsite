@@ -1,0 +1,147 @@
+
+<% include partials/header.ejs %>
+<% include partials/navbar.ejs %>
+
+<div class='jumbotron'>
+  <h1>this is the signup new client form </h1>
+</div>
+
+<div class='ui main text container segment'>
+  <div class='ui huge header'> New Client Signup</div>
+  <form class='ui form' action='/registerNewClient' method='POST'>
+    <div class='two fields'>
+      <div
+        <% if (errors[errors.findIndex(x => x.param == 'firstName')] ) { %>
+          class='error'
+        <% } else { %>
+          class='required field'
+        <% } %>
+        >
+        <label>First Name</label>
+        <input type='text' name='firstName' placeholder="first name" value=<%= user.firstName %> >
+      </div>
+      <div
+        <% if (errors[errors.findIndex(x => x.param == 'lastName')] ) { %>
+          class='error'
+        <% } else { %>
+          class='required field'
+        <% } %>
+        >
+        <label>Last Name</label>
+        <input type='text' name='lastName' placeholder="last name" value=<%= user.lastName %>>
+      </div>
+    </div>
+    <div class='two fields'>
+        <div
+          <% if (errors[errors.findIndex(x => x.param == 'email')] ) { %>
+            class='error'
+          <% } else { %>
+            class='required field'
+          <% } %>
+          >
+            <label>Email</label>
+            <input type='email' name='email' placeholder="email" value= <%= user.email %> >
+        </div>
+        <div
+          <% if (errors[errors.findIndex(x => x.param == 'phone')] ) { %>
+            class='error'
+          <% } else { %>
+            class='required field'
+          <% } %>
+          >
+            <label>Phone #</label>
+            <input type='text' name='phone' placeholder="phone number" value=<%= user.phone %>>
+        </div>
+    </div>
+
+    <div class='fields'>
+      <div class='two wide field'>
+        <label>Unit #</label>
+        <input type='text' name='unitNumber' placeholder='Unit#' value=<%= user.unitNumber %>>
+      </div>
+      <div class='three wide required field'>
+        <label>Street #</label>
+        <input type='text' name='streetNumber' placeholder='Street#' value=<%= user.streetNumber %>>
+      </div>
+      <div class='eleven wide required field'>
+        <label>Street Name</label>
+        <input type='text' name='streetName' placeholder='Street Name' value=<%= user.street %>>
+      </div>
+    </div>
+    <div class='fields'>
+      <div class='ten wide required field'>
+        <label>Suburb</label>
+        <input type='text' name='suburb' placeholder='Suburb' value=<%= user.suburb %>>
+      </div>
+      <div class='three wide required field'>
+        <label>Postcode</label>
+        <input type='text' name='postcode' placeholder='Postcode' value=<%= user.postcode %>>
+      </div>
+      <div class='three wide required field'>
+        <label>State</label>
+        <select name="state" class="ui dropdown">
+          <option value=<%= user.state %>></option>
+          <option value="NSW">NSW</option>
+          <option value="QLD">QLD</option>
+          <option value="VIC">VIC</option>
+          <option value="ACT">ACT</option>
+          <option value="WA">WA</option>
+          <option value="NT">NT</option>
+          <option value="TAS">TAS</option>
+        </select>
+      </div>
+    </div>
+
+    <div class='two fields'>
+        <div
+        <% if (errors[errors.findIndex(x => x.param == 'password')] ) { %>
+          class='error'
+        <% } else { %>
+          class='required field'
+        <% } %>
+        >
+        <label>Password </label>
+        <input type='password' name='password' placeholder="password - min 6 chars, 1 letter & 1 number">
+      </div>
+      <div
+      <% if (errors[errors.findIndex(x => x.param == 'password2' || 'password')] ) { %>
+        class='error'
+      <% } else { %>
+        class='required field'
+      <% } %>
+      >
+        <label>Confirm Password </label>
+        <input type='password' name='password2' placeholder="confirm password ">
+      </div>
+    </div>
+    <div class="required inline field">
+      <div class="ui checked checkbox">
+        <input type="checkbox" checked="false">
+        <label>I agree to the terms and conditions</label>
+      </div>
+    </div>
+    <div class='field'>
+      <input class='ui violet big basic button' type='submit'>
+    </div>
+    <% if (errors.length > 0) { %>
+      <% if (errors[errors.findIndex(x => x.param == 'userExists')] ) { %>
+        <div class="ui negative message">
+          <p><strong> Sorry! </strong></p>
+          <p> <%= errors[0].msg %> </p>
+          <a href='/login'> Login Instead? </a>
+        </div>
+      <% } else { %>
+        <div class="ui negative message">
+          <p><strong> Sorry! Please fix the following errors </strong></p>
+            <ul class="list">
+              <% errors.forEach(function(error){ %>
+                <li><%= error.msg %></li>
+              <% }) %>
+            </ul>
+        </div>
+    <% }} %>
+
+  </form>
+</div>
+
+<% include partials/footer.ejs %>
