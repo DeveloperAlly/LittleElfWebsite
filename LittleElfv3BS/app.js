@@ -21,7 +21,8 @@ app.use(express.static('public'));
 
 //=========DB CONNECT=======//
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/LittleElfDB', {
+//mongoose.connect('mongodb://localhost/LittleElfDB', {
+mongoose.connect('mongodb://admin:a1d2m3i4n5@ec2-54-252-142-90.ap-southeast-2.compute.amazonaws.com:27017/dummyDB', {
   useMongoClient: true
 }).then(() => {
   console.log('mongo connected');
