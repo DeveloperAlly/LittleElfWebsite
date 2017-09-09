@@ -1,0 +1,19 @@
+<% include partials/header.ejs %>
+<% include partials/navbar.ejs %>
+<div style='margin-top: 7em; text-align: center;' class='container-fluid'>
+  <div class="col-md-12">
+    <p> Hello Test </p>
+    <form action='/test/email' method='POST'>
+      <button type='submit' class='btn btn-success'> Email me </button>
+    </form>
+    <div class="col-md-12"></div>
+    <form action='/test/phone' method='POST'>
+      <button type='submit' class='btn btn-success'> SMS me </button>
+    </form>
+    <div class="col-md-12"></div>
+    <form action='/test/findElves' method='POST'>
+      <button type='submit' class='btn btn-success'> Find elves </button>
+    </form>
+</div>
+</div>
+<% include partials/footer.ejs %>

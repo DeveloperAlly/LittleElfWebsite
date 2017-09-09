@@ -1,0 +1,45 @@
+<% include partials/header.ejs %>
+<% include partials/navbar.ejs %>
+
+<link rel='stylesheet' type='text/css' href='/stylesheets/maps.css'>
+<script type='text/javascript' src='/scripts/maps.js'></script> <!--local script source-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- hosted jquery on client side -->
+
+<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/smoothness/jquery-ui.css" media="all">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(28.1823295, -82.352912),
+          zoom: 9,
+          mapTypeId: google.maps.MapTypeId.HYBRID,
+          scrollwheel: false,
+          draggable: false,
+          panControl: true,
+          zoomControl: true,
+          mapTypeControl: true,
+          scaleControl: true,
+          streetViewControl: true,
+          overviewMapControl: true,
+          rotateControl: true,
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    });
+  </script>
+
+
+
+  <div class="img-container">
+      <div id="map-canvas"></div>
+  </div>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+
+
+<% include partials/footer.ejs %>

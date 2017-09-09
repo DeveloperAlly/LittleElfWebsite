@@ -1,7 +1,9 @@
 const passport              = require('passport');
 const NodeGeocoder          = require('node-geocoder');
+const nodemailer            = require('nodemailer');
 const User                  = require('../database/models/user');
 const Client                = require('../database/models/client');
+const Elf                   = require('../database/models/elf');
 const Address               = require('../database/models/address');
 
 module.exports = {
@@ -25,6 +27,7 @@ module.exports = {
           errors.push(cerr);
           return res.render('newClient.ejs', { errors, user });
         }
+
         User.register(new User({
             username  : req.body.email,
             type      : 'Client'
@@ -67,17 +70,14 @@ module.exports = {
 
     const add = {
       coordinates: '',
-      unitNumber: clientProps.unitNumber,
-      streetNumber: clientProps.streetNumber,
-      streetName: clientProps.streetName,
+      streetAddress: clientProps.streetAddress,
       suburb: clientProps.suburb,
       postCode: clientProps.postCode,
       state: clientProps.state,
     };
 
-    const addressStr = (add.streetNumber.trim())
-      .concat(' ')
-      .concat(add.streetName.trim())
+    const addressStr =
+      add.streetAddress.trim()
       .concat(' ')
       .concat(add.suburb.trim())
       .concat(' Australia');
@@ -97,8 +97,13 @@ module.exports = {
           long: geocodeResult[0].longitude,
           googlePlaceId: geocodeResult[0].extra.googlePlaceId
         };
+        const geometry = {
+          type: 'Point',
+          coordinates: [latlong.long, latlong.lat]
+        };
         console.log('got adress coords', latlong);
         add.coordinates = latlong;
+        add.geometry = geometry;
 
         Client.create(clientProps)
           .then(client => {
@@ -108,7 +113,25 @@ module.exports = {
                 theclient.save()
                   .then(savedClient => {
                     user = savedClient;
-                    res.render('./signedUp', { user });
+                    sendNewClientEmail(savedClient.email);
+
+                    const lat = savedClient.addresses[0].coordinates.lat;
+                    const long = savedClient.addresses[0].coordinates.long;
+                    console.log('latlng', lat, long);
+                    console.log(typeof lat);
+                    Elf.geoNear(
+                      //{ type: 'Point', coordinates: [150.8903649, -34.4123691] },
+                      { type: 'Point', coordinates: [parseFloat(long), parseFloat(lat)] },
+                      { spherical: true, maxDistance: 10000 }
+                    )
+                      .then(elves => {
+                        console.log('elves found', elves);
+                        res.render('./signedUp', { user, elves });
+                      })
+                      .catch(err => {
+                        console.log('something wrong with geo call');
+                      });
+
                   })
                   .catch(saveclienterr => {
                     console.log('saveclienterr', saveclienterr);
@@ -159,6 +182,40 @@ module.exports = {
       });
   }
 
+  function sendNewClientEmail(email) {
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.zoho.com',
+        port: 465, //587 for not secure
+        secure: true, // true for 465, false for other ports
+        auth: {
+            user: 'welcome@littleelf.io', // generated ethereal user
+            pass: 'L1ttle3lf'  // generated ethereal password
+        }
+    });
+
+    // setup email data with unicode symbols
+    const mailOptions = {
+        from: '"Little Elf" <welcome@littleelf.io>', // sender address
+        to: email, // list of receivers
+        subject: 'Welcome ✔', // Subject line
+        text: 'Hello from Little Elf!!! Thanks for signing up! \n Please note that this is an automated email - please do not reply', // plain text body
+        html: '<b> Hello from Little Elf!!! Thanks for signing up! Please note that this is an automated email - please do not reply </b>' // html body
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log('error occurred sending mail', error);
+        }
+        console.log('Message sent: %s', info.messageId);
+        // Preview only available when sending through an Ethereal account
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
+        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    });
+  }
+
   //deletes client and user objects & render errors
   function chainedDeleteClient(username) {
     Client.findOneAndRemove({ email: username })
@@ -188,76 +245,3 @@ module.exports = {
         console.log('delete user error', err);
       });
   }
-
-/*
-  function createClient(clientProps) {
-      Client.create(clientProps)
-        .then(client => {
-          console.log('new client created', client);
-          createAddress(clientProps, client._id);
-        })
-        .catch(err => {
-          console.log('create client error', err);
-        }
-      );
-  }
-
-  function createAddress(clientProps, clientId) {
-    //get lat and long of address
-    const add = {
-      unitNumber: clientProps.unitNumber,
-      streetNumber: clientProps.streetNumber,
-      streetName: clientProps.streetName,
-      suburb: clientProps.suburb,
-      postCode: clientProps.postCode,
-      state: clientProps.state,
-    };
-    Address.create(add)
-      .then(address => {
-          console.log('new address created', address);
-          addAddressToClient(address, clientId);
-      })
-      .catch(err => { console.log('create address error', err); });
-  }
-
-  function addAddressToClient(addressObj, clientId) {
-    Client.findByIdAndUpdate({ _id: clientId })
-      .then(client => {
-        client.addresses.push(addressObj);
-        client.save()
-          .then(savedClient => {
-            console.log('update client address', savedClient.addresses);
-          })
-          .catch(err => { console.log('add address error', err); });
-      })
-      .catch(err => { console.log('add address error', err); });
-  }
-
-  function getAddressCoordinates(addressObj) {
-    const addressStr = addressObj.streetNumber
-      .concat(' ')
-      .concat(addressObj.streetName)
-      .concat(' ')
-      .concat(addressObj.suburb)
-      .concat(' Australia');
-
-    const formattedAddressStr = addressStr.toLowerCase();
-    console.log('getAddressCoordinates', formattedAddressStr);
-    const options = {
-      provider: 'google'
-    };
-    const geocoder = NodeGeocoder(options);
-
-    geocoder.geocode(formattedAddressStr)
-      .then((res) => {
-        console.log('adress coords', res);
-        const latlong = {
-          lat:  res[0].latitude,
-          long: res[0].longitude,
-          googlePlaceId: res[0].extra.googlePlaceId
-        };
-        console.log('got adress coords', latlong);
-      })
-      .catch((err) => { console.log('address coords error', err); });
-  }
-*/

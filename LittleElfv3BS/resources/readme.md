@@ -20,3 +20,6 @@ HOW TO UPLOAD TO AWS
 ummm ssh -i 'LittleElf.pem' ubuntu@ ....ummm
 
 4. who knows
+sudo rm -rf LittleElfWebsite
+sudo git clone https://github.com/AlisonWonderlandApps/LittleElfWebsite.git
+node

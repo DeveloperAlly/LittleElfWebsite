@@ -4,6 +4,13 @@ const Schema = mongoose.Schema;
 const AddressSchema = require('./address');
 const JobSchema = require('./job');
 
+const AvailableSchema = new Schema({
+    date: Date,
+    maxLoadsThisDay: Number,
+    loadsAssigned: Number,
+    isAvailable: Boolean
+});
+
 const ElfSchema = new Schema({
   email: {
     type: String,    //primary key
@@ -46,12 +53,13 @@ const ElfSchema = new Schema({
     type: String,
     default: 'I love to wash!'
   },
+  availability: [AvailableSchema],
   addresses: [AddressSchema],
-  jobs: [JobSchema],     //an array of jobs that are assigned to this user OR elf??
-  //  jobs: [{
-  //    type: Schema.Types.ObjectId,  //type is a reference to another collection document
-  //    ref: 'job'                  //from the user.js file -> the name we assigned const User = mongoose.model('user', UserSchema);
-  //  }],
+  //jobs: [JobSchema],     //an array of jobs that are assigned to this user OR elf??
+  jobs: [{
+    type: Schema.Types.ObjectId,  //type is a reference to another collection document
+    ref: 'job'                  //from the user.js file -> the name we assigned const User = mongoose.model('user', UserSchema);
+  }],
   //paymentDetails: [PaymentSchema], //no idea how this works yet, may be multiple options
   //posts: [FeedbackSchema],     //tbd
 });

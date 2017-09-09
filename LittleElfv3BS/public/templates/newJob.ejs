@@ -1,11 +1,29 @@
 <% include partials/header.ejs %>
 <% include partials/navbar.ejs %>
 
-<link rel='stylesheet' type='text/css' href='/stylesheets/clientForm.css'>
-<script type='text/javascript' src='/scripts/clientForm.js'></script> <!--local script source-->
+<link rel='stylesheet' type='text/css' href='/stylesheets/newJob.css'>
+<script type='text/javascript' src='/scripts/newJob.js'></script> <!--local script source-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- hosted jquery on client side -->
 
-<div style='margin-top: 7em;' class='container-fluid'>
+<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/smoothness/jquery-ui.css" media="all">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    const today = new Date(Date.now());
+    $("#datepick").datepicker({
+      dateFormat: 'DD dd/mm/yy',
+      startDate: today
+    });
+    $("#ttimepick").datetimepicker({
+      pickDate: false
+    });
+  });
+</script>
+
+<div style='margin-top: 7em; text-align: center;' class='container-fluid'>
   <div class="col-md-12">
   <div class="col-md-10 col-md-offset-1 jumbotron">
     <h3 class="dark-grey">Book a Job!</h3>
@@ -32,191 +50,166 @@
         </div>
     <% }} %>
 
-    <form action='/registerNewClient' method='POST'  id="contact_form">
+    <form action='/user/jobs/new' method='POST'  id="contact_form">
 
     <div class="row">
-      <% if (errors[errors.findIndex(x => x.param == 'firstName')] ) { %>
-          <p> found firstname error </p>
-        <% } %>
-      <div class="form-group required control-label col-lg-6 col-md-6 col-sm-6">
-        <label>First Name</label>
+      <div class="form-group required control-label col-lg-5 col-md-5 col-sm-5 col-xs-6">
+        <label class='col-form-label'>Wash Type</label>
         <div class='input-group'>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        <input
-          type="text"
-          name="firstName"
-          class="form-control"
-          id=""
-          placeholder="first name"
-          required
-          value='<%= user.firstName %>'
-          >
-        </div>
-      </div>
-
-      <div class="form-group required control-label col-lg-6 col-md-6 col-sm-6">
-        <label>Last Name</label>
-        <div class='input-group'>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        <input
-          type="text"
-          name="lastName"
-          class="form-control"
-          id=""
-          placeholder="last name"
-          required
-          value='<%= user.lastName %>'
-          >
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="form-group required control-label col-lg-6 col-md-6 col-sm-6">
-        <label>Email</label>
-        <div class='input-group'>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-        <input
-          type="email"
-          name="email"
-          class="form-control"
-          id=""
-          placeholder="email"
-          required
-          value='<%= user.email %>'
-          >
-        </div>
-      </div>
-
-      <div class="form-group required control-label col-lg-6 col-md-6 col-sm-6">
-        <label>Phone #</label>
-        <div class='input-group'>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-        <input
-          type="text"
-          name="phone"
-          class="form-control"
-          id=""
-          placeholder="phone #"
-          required
-          value='<%= user.phone %>'
-          >
-      </div>
-    </div>
-  </div>
-
-    <div class="row">
-      <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-6">
-        <label>Unit #</label>
-        <div class='input-group'>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-        <input
-          type="text"
-          name="unitNumber"
-          class="form-control"
-          id=""
-          placeholder="unit #"
-          value='<%= user.unitNumber %>'
-          >
-        </div>
-      </div>
-
-      <div class="form-group required control-label col-lg-2 col-md-2 col-sm-3 col-xs-6">
-        <label>Street #</label>
-        <div class='input-group'>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-        <input
-          type="text"
-          name="streetNumber"
-          class="form-control"
-          id=""
-          placeholder="street #"
-          required
-          value='<%= user.streetNumber %>'
-          >
-        </div>
-      </div>
-
-      <div class="form-group required control-label col-lg-8 col-md-8 col-sm-6">
-        <label>Street Name</label>
-        <div class='input-group'>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-        <input
-          type="text"
-          name="streetName"
-          class="form-control"
-          id=""
-          placeholder="street address"
-          required
-          value='<%= user.streetName %>'
-          >
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="form-group required control-label col-lg-6 col-md-8 col-sm-7">
-        <label>City / Suburb</label>
-        <div class='input-group'>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-        <input
-          type="text"
-          name="suburb"
-          class="form-control"
-          id=""
-          placeholder="suburb"
-          required
-          value='<%= user.suburb %>'
-          >
-        </div>
-      </div>
-
-      <div class="form-group required control-label col-lg-3 col-md-2 col-sm-3 col-xs-6">
-        <label class='col-form-label'>Post Code</label>
-        <div class='input-group'>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-        <input
-          type="text"
-          name="postCode"
-          class="form-control"
-          id=""
-          placeholder="postcode"
-          required
-          value='<%= user.postCode %>'
-          >
-        </div>
-      </div>
-
-      <div class="form-group required control-label col-lg-3 col-md-2 col-sm-2 col-xs-6">
-        <label>State</label>
-        <div class='input-group required'>
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-        <select name="state" class="form-control" required>
-          <option value='<%= user.state %>' ><%= user.state %></option>
-          <option value="NSW">NSW</option>
-          <option value="QLD">QLD</option>
-          <option value="VIC">VIC</option>
-          <option value="ACT">ACT</option>
-          <option value="WA">WA</option>
-          <option value="NT">NT</option>
-          <option value="TAS">TAS</option>
+        <select name="jobType" class="form-control">
+          <option value="regular">Regular</option>
+          <option value="budget">Budget</option>
+          <option value="premium">Premium</option>
+        </select>
+        </div>
+      </div>
+
+      <div class="form-group required control-label col-lg-2 col-md-2 col-sm-2">
+        <label>Loads</label>
+        <div class='input-group'>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+        <select name="numberOfLoads" class="form-control" required>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+        </select>
+        </div>
+      </div>
+
+      <div class="form-group required control-label col-lg-5 col-md-5 col-sm-5">
+        <label>Pickup Date</label>
+        <div class='input-group'>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+          <input
+            class="form-control"
+            type="text"
+            name="date"
+            id="datepick"
+            placeholder="dd/mm/yyyy"
+            required
+            >
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+    <div class="form-group required control-label col-lg-4 col-md-3 col-sm-3 col-xs-6">
+      <label>Pref. Pickup Time</label>
+      <div class='input-group'>
+      <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+        <select name="pickupTime" class="form-control" required>
+          <option value='<%= user.time %>' ><%= user.time %></option>
+          <option value="07:00 - 09:00AM MORNING">07:00 - 09:00AM MORNING</option>
+          <option value="02:00 - 04:00PM AFTERNOON">02:00 - 04:00PM AFTERNOON</option>
+          <option value="07:00 - 09:00PM EVENING">07:00 - 09:00PM EVENING</option>
         </select>
       </div>
+    </div>
+
+    <div class="form-group required control-label col-lg-4 col-md-3 col-sm-3 col-xs-6">
+      <label>Pref. Drop-off Time</label>
+      <div class='input-group'>
+      <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+        <select name="dropoffTime" class="form-control" required>
+          <option value='<%= user.dropoffTime %>' ><%= user.dropoffTime %></option>
+          <option value="07:00 - 09:00AM MORNING">07:00 - 09:00AM MORNING</option>
+          <option value="02:00 - 04:00PM AFTERNOON">02:00 - 04:00PM AFTERNOON</option>
+          <option value="07:00 - 09:00PM EVENING">07:00 - 09:00PM EVENING</option>
+        </select>
       </div>
     </div>
 
 
-  <div class="form-group">
+    <div class="row">
+    <div class="form-group required control-label col-lg-2 col-md-3 col-sm-3 col-xs-6">
+      <label>Hypo-allergenic</label>
+        <div class="onoffswitch center-block ">
+            <input type="checkbox" name="hypoallergenic" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+            <label class="onoffswitch-label" for="myonoffswitch">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+        <small class="text-danger"> *Extra charges may apply </small>
+    </div>
+    <div class="form-group required control-label col-lg-2 col-md-3 col-sm-3 col-xs-6">
+      <label>24hr turnaround</label>
+        <div class="onoffswitch1 center-block ">
+            <input type="checkbox" name="fastTurnaround" class="onoffswitch1-checkbox" id="myonoffswitch1" checked>
+            <label class="onoffswitch1-label" for="myonoffswitch1">
+                <span class="onoffswitch1-inner"></span>
+                <span class="onoffswitch1-switch"></span>
+            </label>
+        </div>
+        <small class="form-text text-danger"> *Extra charges apply </small>
+      </div>
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group required control-label col-lg-12 col-md-12 col-sm-12">
+        <label>Pickup & Dropoff Address</label>
+        <div class='input-group'>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+        <select name="pickupAddress" class="form-control" required>
+        <% for (i=0; i<user.addresses.length; i++) { %>
+            <option value='<%=i %>'>
+            <%=
+              user.addresses[i].streetAddress
+              .concat(' ')
+              .concat(user.addresses[i].suburb)
+            %>
+            </option>
+        <% } %>
+        </select>
+        </div>
+        <small id="newAddress" class="form-text text-muted"><a href="/user/address/new"> Different address? Click here </a></small>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="form-group control-label col-lg-12 col-md-12 col-sm-12">
+        <label>Pickup & Dropoff Instructions</label>
+        <div class='input-group'>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+        <div class="form-group">
+            <textarea
+            rows="3"
+            id=""
+            name="pickupInstructions"
+            class="form-control"
+            placeholder="Pickup instrustions. E.g. Hamper behind back gate, beware the dog etc."></textarea>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="prefs" name="preferences">
+            Save these as my preferred preferences
+        </label>
+      </div>
       <div class='col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4'>
-      <div class="form-group">
-        <button type="submit" class="btn-lg btn-primary btn-block">Book an Elf!</button>
+        <div class="form-group">
+          <button type="submit" class="btn-lg btn-success btn-block">Book it</button>
+        </div>
       </div>
     </div>
-    </div>
+
   </div>
   </form>
+
+    </div>
   </div>
-  </div>
+</div>
 
 </div>
 

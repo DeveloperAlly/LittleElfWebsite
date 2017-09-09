@@ -33,7 +33,7 @@
         </div>
     <% }} %>
 
-    <form action='/registerNewClient' method='POST'  id="contact_form">
+    <form action='/clients/new' method='POST'  id="contact_form">
 
     <div class="row">
       <% if (errors[errors.findIndex(x => x.param == 'firstName')] ) { %>
@@ -106,57 +106,26 @@
     </div>
   </div>
 
-    <div class="row">
-      <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-6">
-        <label>Unit #</label>
+  <div class="row">
+      <div class="form-group required control-label col-lg-12 col-md-12 col-sm-12">
+        <label>Street Address</label>
         <div class='input-group'>
         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
         <input
           type="text"
-          name="unitNumber"
-          class="form-control"
-          id=""
-          placeholder="unit #"
-          value='<%= user.unitNumber %>'
-          >
-        </div>
-      </div>
-
-      <div class="form-group required control-label col-lg-2 col-md-2 col-sm-3 col-xs-6">
-        <label>Street #</label>
-        <div class='input-group'>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-        <input
-          type="text"
-          name="streetNumber"
-          class="form-control"
-          id=""
-          placeholder="street #"
-          required
-          value='<%= user.streetNumber %>'
-          >
-        </div>
-      </div>
-
-      <div class="form-group required control-label col-lg-8 col-md-8 col-sm-6">
-        <label>Street Name</label>
-        <div class='input-group'>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-        <input
-          type="text"
-          name="streetName"
+          name="streetAddress"
           class="form-control"
           id=""
           placeholder="street address"
           required
-          value='<%= user.streetName %>'
+          value='<%= user.streetAddress %>'
           >
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="form-group required control-label col-lg-6 col-md-8 col-sm-7">
+      <div class="form-group required control-label col-lg-6 col-md-6 col-sm-6">
         <label>City / Suburb</label>
         <div class='input-group'>
         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
@@ -172,8 +141,8 @@
         </div>
       </div>
 
-      <div class="form-group required control-label col-lg-3 col-md-2 col-sm-3 col-xs-6">
-        <label class='col-form-label'>Post Code</label>
+      <div class="form-group required control-label col-lg-3 col-md-3 col-sm-3 col-xs-6">
+        <label class='col-form-label'>PostCode</label>
         <div class='input-group'>
         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
         <input
@@ -188,7 +157,7 @@
         </div>
       </div>
 
-      <div class="form-group required control-label col-lg-3 col-md-2 col-sm-2 col-xs-6">
+      <div class="form-group required control-label col-lg-3 col-md-3 col-sm-3 col-xs-6">
         <label>State</label>
         <div class='input-group required'>
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>

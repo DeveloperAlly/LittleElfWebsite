@@ -15,6 +15,24 @@ const geocoder = NodeGeocoder(options);
 
 module.exports = {
 
+  //DELETE THIS
+  showTestView(req, res, next) {
+    const user = {
+      email: 'test@me.com',
+      firstName: 'New',
+      lastName: 'User',
+      phone: 12345678
+    };
+    const jobs = [
+      {status: 'assigned'},
+      {status: 'washing'}
+    ];
+    const amount = 30.01;
+    //res.render('signedUp.ejs', { user });
+    //res.render('clientJobs.ejs', { jobs });
+    res.render('newJobPayment.ejs', { amount });
+  },
+
   /*******RENDER PAGES*******/
   showLanding(req, res, next) {
     res.render('home.ejs');
@@ -39,6 +57,15 @@ module.exports = {
   showLoggedIn(req, res, next) {
     console.log('show logged up', req.user);
     if (req.user.type === 'Client') {
+      res.redirect('/jobs/new');
+    } else if (req.user.type === 'Client') {
+      res.redirect('/elf/jobs');
+    } else {
+      console.log('im an admin or an error');
+      res.render('error.ejs');
+    }
+    /* old
+    if (req.user.type === 'Client') {
       Client.findOne({ email: req.user.username }, (err, user) => {
         if (err) {
           console.log('err in showSignedUp', err);
@@ -60,6 +87,7 @@ module.exports = {
       console.log('im an admin or an error');
       res.render('error.ejs');
     }
+    */
   },
   showSignedUp(req, res, next) {
     console.log('show signed up', req.user);
@@ -95,6 +123,10 @@ module.exports = {
   },
   showErrorPage(req, res, next) {
     res.render('error.ejs');
+  },
+
+  showMap(req, res, next) {
+    res.render('mapview.ejs');
   },
 
   /*******LOGIN/OUT PAGES*******/
@@ -134,20 +166,31 @@ module.exports = {
     }
   },
 
+  showNewAddress(req, res, next) {
+    let errors = [{ msg: 'hi'}];
+    let user = req.body;
+    console.log('address current user', user);
+    res.render('newAddress.ejs', { errors, user });
+  },
+
   /*******JOB PAGES*******/
   showNewJob(req, res, next) {
     if (req.user.type === 'Client') {
       Client.findOne({ email: req.user.username })
         .then((user) => {
-          //console.log('newjob user', user.address[0].streetName);
+          //console.log('newjob user', user.address[0].streetAddress);
           const errors = [];
           res.render('newJob.ejs', { user, errors });
         })
         .catch((err) => { console.log('client findone catcherror ', err); });
     }
   },
+
   showJobs(req, res, next) {
-    res.render('showJobs.ejs');
+    if (req.user.type === 'Client') {
+      res.redirect('/client/jobs');
+    }
+    res.redirect('/elf/jobs');
   },
 
 }; //END MODULE EXPORTS

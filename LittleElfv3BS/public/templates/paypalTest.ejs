@@ -1,0 +1,52 @@
+<% include partials/header.ejs %>
+<% include partials/navbar.ejs %>
+
+<link rel='stylesheet' type='text/css' href='/stylesheets/paypal.css'>
+<script type='text/javascript' src='/scripts/paypal.js'></script> <!--local script source-->
+
+<div style='margin-top: 7em; text-align: center;' class='container-fluid'>
+  <div class="col-md-12">
+    <p> Hello Paypal </p>
+
+    <div id="paypal-button"></div>
+
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+    <script>
+        paypal.Button.render({
+
+            env: 'sandbox',//'production', // Or 'sandbox'
+
+            client: {
+                sandbox:    'Aera14Son8-WiVZIlYnMhKPT2zdE6T91i0DVS3yC9WT7hnFVp0nDY2zHAltfaI_Se0etdp1m2ysysZAM',
+                production: 'xxxxxxxxx'
+            },
+
+            commit: true, // Show a 'Pay Now' button
+
+            payment: function(data, actions) {
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: { total: '1.00', currency: 'USD' }
+                            }
+                        ]
+                    }
+                });
+            },
+
+            onAuthorize: function(data, actions) {
+                return actions.payment.execute().then(function(payment) {
+                  console.log('PAYMENT YAY');
+                    // The payment is complete!
+                    // You can now show a confirmation message to the customer
+                });
+            }
+
+        }, '#paypal-button');
+    </script>
+
+  </div>
+</div>
+<% include partials/footer.ejs %>

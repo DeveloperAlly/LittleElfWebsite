@@ -15,20 +15,17 @@
     <ul class="nav navbar-nav navbar-right">
       <ul class="nav navbar-nav">
         <% if(login) { %>
-          <li class=""><a href='../user/details'><span class="glyphicon glyphicon-user"></span> My Account </a></li>
-          <% if(!login) { %>
+          <% if(thisUser.type =='Client') { %>
             <li class=""><a href='../jobs/new'><span class="glyphicon glyphicon-user"></span> New Job </a></li>
-          <% } else { %>
-            <li class=""><a href='../jobs/new'><span class="glyphicon glyphicon-user"></span> Your Jobs </a></li>
           <% } %>
+          <li class=""><a href='../user/details'><span class="glyphicon glyphicon-user"></span> My Account </a></li>
+          <li class=""><a href='../client/jobs'><span class="glyphicon glyphicon-user"></span> Your Jobs </a></li>
           <li class=""><a href='../logout' class='item'><span class="glyphicon glyphicon-lock"></span> Logout </a></li>
-
         <% } else { %>
           <li class=""></span><a href='../clients/new'><span class="glyphicon glyphicon-user"></span> Client Signup</a></li>
           <li class=""><a href='../elves/new'><span class="glyphicon glyphicon-user"></span> Elf Signup</a></li>
           <li class=""><a href='../login' class='item'><span class="glyphicon glyphicon-lock"></span> Login </a></li>
         <% } %>
-
     </ul>
 
   </div><!--/.navbar-collapse -->

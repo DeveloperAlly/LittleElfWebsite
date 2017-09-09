@@ -1,0 +1,21 @@
+
+.img-container{
+  margin-top: 8em;
+  height: 20em;
+  width: 20em;
+}
+
+body {
+	background: url(https://placeimg.com/1000/1000/nature/grayscale) no-repeat 50% 50% fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+#map-canvas {
+	width: 100%;
+	height: 100%;
+	margin-bottom: 15px;
+	border: 2px solid #fff;
+}

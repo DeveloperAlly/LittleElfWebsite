@@ -22,12 +22,7 @@ const GeoCodeSchema = new mongoose.Schema({
 const AddressSchema = new mongoose.Schema({
   geometry: PointSchema,      //the lng and lat coordinates //geoJson.org -> mongo's system of saving coordinates //subdocument
   coordinates: GeoCodeSchema,
-  unitNumber: String,
-  streetNumber: {
-    type: String,
-    required: true
-  },
-  streetName: {
+  streetAddress: {
     type: String,
     required: true
   },
@@ -43,7 +38,10 @@ const AddressSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  other: String,        //for delivery details, default? idk
+  instructions: String,   //delivery / pickup instructions and additional info for elves
+  other: String
 });
 
+
 module.exports = AddressSchema;
+//module.exports = mongoose.model('address', AddressSchema);

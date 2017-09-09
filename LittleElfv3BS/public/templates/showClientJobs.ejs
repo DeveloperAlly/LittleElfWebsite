@@ -1,0 +1,21 @@
+<% include partials/header.ejs %>
+<% include partials/navbar.ejs %>
+<script type='text/javascript' src='/scripts/global.js'></script> <!--local script source-->
+<link rel='stylesheet' type='text/css' href='/stylesheets/global.css'>
+
+<div style='margin-top: 7em; text-align: center;' class='container-fluid'>
+
+  <div class='jumbotron'>
+    <p> Your Jobs </p>
+    <p> Hello! <% myjobs %> </p>
+    <% myjobs.forEach(function(job){ %>
+      <li><%= job.pickupTime %></li>
+      <li><%= job.numberOfLoads %></li>
+      <li><%= job.pickupAddress.streetAddress %></li>
+      <li><%= job.status %></li>
+    <% }) %>
+
+  </div>
+</div>
+
+<% include partials/footer.ejs %>
